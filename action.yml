@@ -29,9 +29,16 @@ runs:
         cache: npm
 
     - run: npm ci
+      shell: bash
+
     - run: npm run lint
+      shell: bash
+
     - run: npm run test:coverage
+      shell: bash
+
     - run: npm run build
+      shell: bash
 
     - name: Cache SonarCloud packages
       uses: actions/cache@v4
