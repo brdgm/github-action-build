@@ -26,6 +26,6 @@ jobs:
     steps:
       - uses: brdgm/github-action-build@v1
         with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          sonar-token: ${{ secrets.SONARCLOUD_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
