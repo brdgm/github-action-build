@@ -1,0 +1,49 @@
+name: Build
+description: Composite GitHub Action to build a brdgm.me application.
+
+inputs:
+  sonar-token:
+    description: SONAR_TOKEN secret. This is not available for external PRs, so it may be empty and Sonar is skipped in this case.
+    required: false
+  github-token:
+    description: GITHUB_TOKEN secret
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+    - name: Read properties from package.json
+      id: package_json
+      uses: zoexx/github-action-json-file-properties@1.0.6
+      with:
+        file_path: package.json
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: npm
+
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run test:coverage
+    - run: npm run build
+
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - uses: SonarSource/sonarcloud-github-action@master
+      if: env.SONARCLOUD_TOKEN != null
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        SONAR_TOKEN: ${{ inputs.sonar-token }}
+      with:
+        args: -Dsonar.projectVersion=${{steps.package_json.outputs.version}}
