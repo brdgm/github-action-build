@@ -41,7 +41,7 @@ runs:
         restore-keys: ${{ runner.os }}-sonar
 
     - uses: SonarSource/sonarcloud-github-action@master
-      if: env.SONARCLOUD_TOKEN != null
+      if: inputs.sonar-token != ''
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
         SONAR_TOKEN: ${{ inputs.sonar-token }}
