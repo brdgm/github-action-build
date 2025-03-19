@@ -8,6 +8,10 @@ inputs:
   github-token:
     description: GITHUB_TOKEN secret
     required: true
+  playwright:
+    description: Enable Playwright
+    required: true
+    default: 'false'
 
 runs:
   using: composite
@@ -32,12 +36,17 @@ runs:
       shell: bash
 
     - run: npx playwright install chromium --with-deps
+      if: inputs.playwright == 'true'
       shell: bash
 
     - run: npm run lint
       shell: bash
 
     - run: npm run test:coverage
+      shell: bash
+
+    - run: npm run test:e2e
+      if: inputs.playwright == 'true'
       shell: bash
 
     - run: npm run build
