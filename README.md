@@ -28,4 +28,5 @@ jobs:
         with:
           sonar-token: ${{ secrets.SONARCLOUD_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          playwright: false
 ```
