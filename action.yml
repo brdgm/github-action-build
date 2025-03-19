@@ -31,7 +31,7 @@ runs:
     - run: npm ci
       shell: bash
 
-    - run: npx playwright install chromium await page.goto('http://localhost:8080/blitzkrieg/#/');--with-deps
+    - run: npx playwright install chromium --with-deps
       shell: bash
 
     - run: npm run lint
