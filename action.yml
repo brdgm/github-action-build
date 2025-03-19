@@ -45,11 +45,11 @@ runs:
     - run: npm run test:coverage
       shell: bash
 
-    - run: npm run test:e2e
-      if: inputs.playwright == 'true'
+    - run: npm run build
       shell: bash
 
-    - run: npm run build
+    - run: npm run test:e2e
+      if: inputs.playwright == 'true'
       shell: bash
 
     - uses: actions/upload-artifact@v4
