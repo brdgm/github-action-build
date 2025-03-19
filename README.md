@@ -10,9 +10,8 @@ name: Build
 
 on:
   push:
-    branches-ignore:
-      - experimental/**
-      - master
+    branches:
+      - develop
   pull_request:
     branches-ignore:
       - experimental/**
