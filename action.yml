@@ -31,6 +31,8 @@ runs:
     - run: npm ci
       shell: bash
 
+    - run: npx playwright install --with-deps
+
     - run: npm run lint
       shell: bash
 
@@ -39,6 +41,13 @@ runs:
 
     - run: npm run build
       shell: bash
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
 
     - uses: SonarSource/sonarqube-scan-action@v5
       if: inputs.sonar-token != ''
