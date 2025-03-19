@@ -63,6 +63,9 @@ runs:
         path: playwright-report/
         retention-days: 30
 
+    - run: apt install curl unzip  # required by SonarSource/sonarqube-scan-action
+      shell: bash
+
     - uses: SonarSource/sonarqube-scan-action@v5
       if: inputs.sonar-token != ''
       env:
