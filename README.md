@@ -13,9 +13,6 @@ on:
     branches:
       - develop
   pull_request:
-    branches-ignore:
-      - experimental/**
-      - master
   workflow_dispatch:
 
 jobs:
